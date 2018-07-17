@@ -1,5 +1,7 @@
 # Sleek Networking, 🚀
 
+[![npm version](https://badge.fury.io/js/sleek-networking.svg)](https://badge.fury.io/js/sleek-networking)
+
 A simple and efficient `fetch` wrapper that works across any Javascript (React/React Native/Vue JS, etc) app.
 It provides you with a clean and consistent way to call your Api, meanwhile handling JWT authentication, middlewares, etc.
 
