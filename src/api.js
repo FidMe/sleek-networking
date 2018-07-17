@@ -1,9 +1,5 @@
-import { 
-  formatResponse,
-  getEachHeaderValue, 
-  formatBodyContent,
-  getUrl,
-} from './helper';
+import { formatBodyContent, getEachHeaderValue, getUrl } from './helpers';
+import ResponseFormatter from './response-formatter';
 
 class Api {
   constructor(options) {
@@ -35,7 +31,7 @@ class Api {
       method,
     });
 
-    const formattedResponse = formatResponse(response);
+    const formattedResponse = new ResponseFormatter(response).format();
     this.options.afterEach.forEach(async fn => fn(await formattedResponse));
     return formattedResponse;
   }
@@ -50,7 +46,6 @@ class Api {
     this.mantadoryParams.forEach(mandatoryParam => {
       if (!this.options[mandatoryParam]) throw new Error(`Missing ${mandatoryParam}`);
     })
-
     this.url = `${this.options.scheme}://${this.options.baseUrl}`;
   }
 }
