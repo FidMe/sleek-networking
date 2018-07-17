@@ -1,10 +1,11 @@
 {
-  "name": "networking",
-  "version": "0.0.1",
+  "name": "sleek-networking",
+  "version": "0.1.0",
   "description": "A simple package to handle networking, cache, offline ?, etc",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test-with-cov": "jest --coverage"
   },
   "jest": {
     "verbose": true
