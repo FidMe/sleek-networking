@@ -51,8 +51,25 @@ api.put('posts', body, options)
 api.delete('posts', options)
 
 api.get('posts').then(res => console.log(res)) 
-// { status: 200, body: {} }
+/* 
+Every request returns an object containing this format :
+{ status: 200, body: { parsed: "JSON" }, header }
+*/
 ```
+
+By default, sleek-networking will assume you want to deal with JSON only.
+If you query a JSON endpoint, no need to parse it afterwards.
+If your Api returns something different from readable JSON, it will be returned as raw text.
+
+If you want to send something different from Json, for example form data, you need to do the following : 
+
+```javascript
+const formData = new FormData();
+formData.append('key', 'value');
+
+api.post('yourendpoint', formData, { headers: ['Content-Type': 'multipart/form-data; boundary=----yourboundary'] })
+```
+
 
 ### Providing JWT Header
 
