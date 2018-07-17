@@ -17,16 +17,6 @@ test('Api does not throws error when config is valid', () => {
     .toThrow();
 });
 
-test('getUrl can return absolute url', () => {
-  const api = buildApi();
-  expect(api.getUrl('http://fidme.com')).toEqual('http://fidme.com')
-});
-
-test('getUrl can build url based on a path and config', () => {
-  const api = buildApi();
-  expect(api.getUrl('/coucou')).toEqual('http://google.fr/coucou')
-});
-
 test('Api can request absolute url', async () => {
   const api = buildApi();
   

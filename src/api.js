@@ -1,4 +1,9 @@
-import { isJsonResponse, getEachHeaderValue, formatBodyContent } from './helper';
+import { 
+  formatResponse,
+  getEachHeaderValue, 
+  formatBodyContent,
+  getUrl,
+} from './helper';
 
 class Api {
   constructor(options) {
@@ -7,42 +12,6 @@ class Api {
     this.validateOptions();
   }
 
-  getUrl(url) {
-    if (url.substring(0, 4) === 'http') return url;
-    const parsedUrl = (url.charAt(0) === '/') ? url.substring(1) : url;
-
-    return `${this.url}/${parsedUrl}`;
-  }
-
-  async compactResponse(response) {
-    const returnCompactedResponse = body => ({
-      body,
-      status: response.status,
-      headers: response.headers,
-    });
-
-    if (await isJsonResponse(response)) return response.json().then(body => returnCompactedResponse(body));
-    else return response.text().then(body => returnCompactedResponse(body));
-  }
-
-  headers(additionals = {}) {
-    const retrievedHeaders = getEachHeaderValue(this.options.headers);
-
-    return { ...additionals, ...retrievedHeaders };
-  }
-
-  async request(url, method, body, headers) {
-    const response = await fetch(this.getUrl(url), {
-      headers: this.headers(headers),
-      body: formatBodyContent(body),
-      method,
-    });
-
-    const compactedResponse = this.compactResponse(response);
-    this.options.afterEach.forEach(async fn => fn(await compactedResponse));
-    return compactedResponse;
-  }
-  
   get(url, headers = {}) {
     return this.request(url, 'get', undefined, headers);
   }
@@ -57,6 +26,24 @@ class Api {
 
   delete(url, headers = {}) {
     return this.request(url, 'delete', undefined, headers);
+  }
+
+  async request(path, method, body, headers) {
+    const response = await fetch(getUrl(this.url, path), {
+      headers: this.headers(headers),
+      body: formatBodyContent(body),
+      method,
+    });
+
+    const formattedResponse = formatResponse(response);
+    this.options.afterEach.forEach(async fn => fn(await formattedResponse));
+    return formattedResponse;
+  }
+
+  headers(additionals = {}) {
+    const retrievedHeaders = getEachHeaderValue(this.options.headers);
+
+    return { ...additionals, ...retrievedHeaders };
   }
 
   validateOptions() {
