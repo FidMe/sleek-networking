@@ -1,4 +1,4 @@
-import Api from '../src/api';
+import { Api, Jwt } from '../src';
 import nock from 'nock';
 import fetch from 'node-fetch';
 global.fetch = fetch;    
@@ -35,17 +35,6 @@ test('Request returns body and status of the request', async () => {
   const res = await api.request('http://dzadza.com/coucou');
   expect(res.status).toEqual(200);
   expect(res.body).toEqual({ data: 'ok' });
-});
-
-
-test('Request calls every afterEach', async () => {
-  let didCallAfterEach = false;
-  const api = buildApi({ afterEach: [(res) => {didCallAfterEach = true}] });
-
-  nock('http://dzadza.com').get('/coucou').reply(200, 'lol');
-
-  await api.request('http://dzadza.com/coucou');
-  expect(didCallAfterEach).toBe(true);
 });
 
 test('Request calls every afterEach', async () => {
@@ -109,4 +98,28 @@ test('api can make delete request', async () => {
 
   expect(res.status).toEqual(200);
   expect(res.body).toEqual('lol');
+});
+
+test('api can retry if request fails', async () => {
+  const api = buildApi({ scheme: 'htp', baseUrl: 'google', retriesCount: 5 });
+  const spyedFetch = jest.spyOn(global, 'fetch');
+  try { await api.get('coucou') } catch (error) {}
+
+  expect(spyedFetch).toHaveBeenCalledTimes(6);
+  spyedFetch.mockClear();
+});
+
+test('retriesCount can also be configured on each request', async () => {
+  const api = buildApi({ scheme: 'htp', baseUrl: 'google' });
+  const fetchh = jest.spyOn(global, 'fetch');
+  try { await api.get('coucou', { retriesCount: 8 }) } catch (error) { }
+
+  expect(fetchh).toHaveBeenCalledTimes(9);
+});
+
+test('can add jwt token to every headers', async () => {
+  const tokenToAdd = new Jwt('123').generateToken();
+  const api = buildApi({ headers: { 'token': () => new Jwt('123').generateToken() }  });
+
+  expect(tokenToAdd).toEqual(api.headers().token);
 });

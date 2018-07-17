@@ -6,6 +6,9 @@
   "scripts": {
     "test": "jest"
   },
+  "jest": {
+    "verbose": true
+  },
   "author": "Michaël Villeneuve",
   "license": "MIT",
   "devDependencies": {
@@ -19,5 +22,8 @@
     "nock": "^9.4.2",
     "node-fetch": "^2.1.2",
     "regenerator-runtime": "^0.12.0"
+  },
+  "dependencies": {
+    "jsrsasign": "^8.0.12"
   }
 }
