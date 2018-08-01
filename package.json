@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "test-with-cov": "jest --coverage",
-    "prepublish": "rm .babelrc"
+    "prepublish": "mv .babelrc .not.babelrc",
+    "postpublish": "mv .not.babelrc .babelrc"
   },
   "jest": {
     "verbose": true
