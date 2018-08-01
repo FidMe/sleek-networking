@@ -4,7 +4,12 @@ import Request from "./request";
 export class Api {
   constructor(options) {
     this.mantadoryParams = ["scheme", "baseUrl"];
-    this.options = { afterEach: [], retriesCount: 1, headers: {}, ...options };
+    this.options = {
+      afterEach: [],
+      retriesCount: 1,
+      headers: {},
+      ...options
+    };
     this.validateOptions();
   }
 

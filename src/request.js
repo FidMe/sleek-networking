@@ -6,6 +6,7 @@ export default class Request {
     this.path = path;
     this.method = method;
     this.body = body;
+    this.timestamp = Date.now();
     this.options = options;
   }
 

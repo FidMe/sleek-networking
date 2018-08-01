@@ -163,3 +163,15 @@ test("can add jwt token to every headers", async () => {
 
   expect(tokenToAdd).toEqual(api.currentRequest.headers().token);
 });
+
+test("can retrieve timestamp from currentRequest", async () => {
+  const api = buildApi();
+
+  nock("http://google.fr")
+    .get("/coucou")
+    .reply(200, "lol");
+
+  await api.get("coucou");
+
+  expect(api.currentRequest.timestamp).toBeTruthy();
+});
