@@ -2,7 +2,7 @@ import token from 'jsrsasign';
 
 export class Jwt {
   constructor(secret, payload = {}, headers = {}) {
-    if (!secret) throw 'You must pass a secret';
+    if (!secret) throw new Error('You must pass a secret');
 
     this.secret = secret;
     this.headers = { alg: 'HS256', typ: 'JWT', ...headers };

@@ -16,7 +16,7 @@ export default class Request {
         return await fetch(url, fetchOptions);
       } catch (err) {
         if (n === 0) throw err;
-        return await fetchRetry(url, fetchOptions, n - 1);
+        return fetchRetry(url, fetchOptions, n - 1);
       }
     };
 

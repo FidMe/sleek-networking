@@ -123,7 +123,9 @@ test('api can retry if request fails', async () => {
   const spyedFetch = jest.spyOn(global, 'fetch');
   try {
     await api.get('coucou');
-  } catch (error) {}
+  } catch (error) {
+    //
+  }
 
   expect(spyedFetch).toHaveBeenCalledTimes(6);
   spyedFetch.mockClear();
@@ -134,7 +136,9 @@ test('retriesCount can also be configured on each request', async () => {
   const fetchh = jest.spyOn(global, 'fetch');
   try {
     await api.get('coucou', { retriesCount: 8 });
-  } catch (error) {}
+  } catch (error) {
+    //
+  }
 
   expect(fetchh).toHaveBeenCalledTimes(9);
 });

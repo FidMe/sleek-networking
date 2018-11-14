@@ -1,3 +1,5 @@
+/* eslint-disable strict */
+
 'use strict';
 
 const presets = ['@babel/preset-env'];
