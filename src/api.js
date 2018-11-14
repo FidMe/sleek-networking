@@ -6,6 +6,7 @@ export class Api {
     this.mantadoryParams = ['scheme', 'baseUrl'];
     this.options = {
       afterEach: [],
+      onError: [],
       retriesCount: 1,
       headers: {},
       ...options,
@@ -29,15 +30,23 @@ export class Api {
     return this.request(url, 'delete', undefined, options);
   }
 
-  async request(path, method, body, options = {}) {
-    this.currentRequest = new Request(this.url, path, method, body, {
-      ...this.options,
-      ...options,
-    });
-    const response = await this.currentRequest.process();
-    const formattedResponse = new ResponseFormatter(response).format();
-    this.options.afterEach.forEach(async fn => fn(await formattedResponse));
-    return formattedResponse;
+  async request(path, method, body, opts= {}) {
+    const options = {
+        ...this.options,
+        ...opts,
+    };
+
+    try {
+      this.currentRequest = new Request(this.url, path, method, body, options);
+      const response = await this.currentRequest.process();
+      const formattedResponse = new ResponseFormatter(response).format();
+      this.options.afterEach.forEach(async fn => fn(await formattedResponse));
+
+      return formattedResponse;
+    } catch (error) {
+      this.options.onError.forEach(async fn => fn(error));
+      throw error;
+    }
   }
 
   validateOptions() {

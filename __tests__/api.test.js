@@ -58,6 +58,19 @@ test('Request calls every afterEach', async () => {
   expect(afterEachRes).toEqual(res);
 });
 
+test('Request calls every onError', async () => {
+  const onErrorCb = jest.fn();
+  const api = buildApi({ onError: [onErrorCb] });
+
+  try {
+    await api.request('http://dzadza.com/coucou');
+  } catch (error) {
+    //
+  }
+
+  expect(onErrorCb).toHaveBeenCalled();
+});
+
 test('api adds headers to each request', async () => {
   const api = buildApi({
     headers: {
