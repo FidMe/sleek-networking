@@ -1,4 +1,4 @@
-import { formatBodyContent, getUrl } from "./helpers";
+import { formatBodyContent, getUrl } from './helpers';
 
 export default class Request {
   constructor(url, path, method, body, options) {
@@ -16,7 +16,7 @@ export default class Request {
         return await fetch(url, fetchOptions);
       } catch (err) {
         if (n === 0) throw err;
-        return await fetchRetry(url, fetchOptions, n - 1);
+        return fetchRetry(url, fetchOptions, n - 1);
       }
     };
 
@@ -25,19 +25,18 @@ export default class Request {
       {
         headers: this.headers(),
         body: formatBodyContent(this.body),
-        method: this.method
+        method: this.method,
       },
-      this.options.retriesCount
+      this.options.retriesCount,
     );
   }
 
   headers() {
-    let retrievedValuesOfHeaders = {};
+    const retrievedValuesOfHeaders = {};
     const headersAsArray = Object.entries(this.options.headers);
 
-    headersAsArray.forEach(value => {
-      retrievedValuesOfHeaders[value[0]] =
-        typeof value[1] === "function" ? value[1](this) : value[1];
+    headersAsArray.forEach((value) => {
+      retrievedValuesOfHeaders[value[0]] = typeof value[1] === 'function' ? value[1](this) : value[1];
     });
 
     return retrievedValuesOfHeaders;
