@@ -35,6 +35,7 @@ const api = new Api({
   retriesCount: 0,
   baseUrl: "google.fr/api/v1",
   afterEach: [() => {}],
+  onError: [() => {}],
   headers: {
     "content-type": "Application/JSON",
     "X-Auth-Token": () => new Jwt("1234").generateToken()
