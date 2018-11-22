@@ -43,7 +43,7 @@ const api = new Api({
 });
 ```
 
-### Use it across your app like that
+### Usage
 
 ```javascript
 api.get("posts", options);
@@ -142,6 +142,18 @@ You can access anything related to the current Request including :
 - `request.method`
 - `request.body`
 - `request.options` which is an object containing `headers` and other fetch/api options
+
+### Response handling
+
+Instead of returning the default fetch response which contains only status and hard to access body informations, it returns a formatted response.
+
+| Methods         | Description                                                                                  | Returns           |
+| --------------- | -------------------------------------------------------------------------------------------- | ----------------- |
+| succeeded       | Check if status is between `200` and `300` and if there is no error.                         | `boolean`         |
+| bodyIfSucceeded | Return the body of the request if the status is between `200` and `300` else return `false`. | `body` or `false` |
+| bodyOrThrow     | Return the body of the request if the status is between `200` and `300` else throw a error.  | `body` or throw   |
+| didNetworkFail  | If the network request failed, return `true` or `false`                                      | `boolean`         |
+| didServerFail   | Tell you if you get error from the server.                                                   | `boolean`         |
 
 ### Contribute
 
