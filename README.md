@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/sleek-networking.svg)](https://badge.fury.io/js/sleek-networking)
 [![dependencies status](https://david-dm.org/FidMe/sleek-networking/status.svg)](https://david-dm.org/FidMe/sleek-networking)
-[![build status](https://api.travis-ci.org/FidMe/sleek-networking.svg?branch=master)]
+[![Build Status](https://travis-ci.org/FidMe/sleek-networking.svg?branch=master)](https://travis-ci.org/FidMe/sleek-networking)
 
 
 A simple and efficient `fetch` wrapper that works across any Javascript (React/React Native/Vue JS, etc) app.
