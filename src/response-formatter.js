@@ -1,10 +1,12 @@
+import Response from './response';
+
 class ResponseFormatter {
   constructor(response) {
     this.response = response;
   }
 
   async format() {
-    const returnFormattedResponse = body => ({
+    const returnFormattedResponse = body => new Response({
       body,
       status: this.response.status,
       headers: this.response.headers,
