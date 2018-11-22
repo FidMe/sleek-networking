@@ -1,5 +1,6 @@
 import ResponseFormatter from './response-formatter';
 import Request from './request';
+import Response from './response';
 
 export class Api {
   constructor(options) {
@@ -30,10 +31,10 @@ export class Api {
     return this.request(url, 'delete', undefined, options);
   }
 
-  async request(path, method, body, opts= {}) {
+  async request(path, method, body, opts = {}) {
     const options = {
-        ...this.options,
-        ...opts,
+      ...this.options,
+      ...opts,
     };
 
     try {
@@ -45,7 +46,7 @@ export class Api {
       return formattedResponse;
     } catch (error) {
       this.options.onError.forEach(async fn => fn(error));
-      throw error;
+      return new Response({ error });
     }
   }
 

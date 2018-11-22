@@ -62,13 +62,29 @@ test('Request calls every onError', async () => {
   const onErrorCb = jest.fn();
   const api = buildApi({ onError: [onErrorCb] });
 
-  try {
-    await api.request('http://dzadza.com/coucou');
-  } catch (error) {
-    //
-  }
+  await api.request('http://dzadza.com/coucou');
 
   expect(onErrorCb).toHaveBeenCalled();
+});
+
+test('Request returns response instance', async () => {
+  const api = buildApi();
+  nock('http://google.fr')
+    .get('/coucou')
+    .reply(200, 'lol');
+
+  const res = await api.get('coucou');
+  expect(res.constructor.name).toEqual('Response');
+});
+
+test('Request returns response instance even if request fails', async () => {
+  const onErrorCb = jest.fn();
+  const api = buildApi({ onError: [onErrorCb] });
+
+  const res = await api.request('http://dzadza.com/coucou');
+
+  expect(onErrorCb).toHaveBeenCalled();
+  expect(res.constructor.name).toEqual('Response');
 });
 
 test('api adds headers to each request', async () => {
