@@ -34,8 +34,9 @@ export default class Response {
   }
 
   get succeeded() {
-    return !this.error
+    return (!this.error
         && this.status >= 200
-        && this.status < 300;
+        && this.status < 300)
+        || this.status === 422;
   }
 }
