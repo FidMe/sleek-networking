@@ -148,21 +148,26 @@ test('api can make delete request', async () => {
 });
 
 test('api can retry if request fails', async () => {
-  const api = buildApi({ scheme: 'htp', baseUrl: 'google', retriesCount: 5 });
-  const spyedFetch = jest.spyOn(global, 'fetch');
+  const api = buildApi({
+    scheme: 'http',
+    baseUrl: 'google',
+    retriesCount: 5,
+  });
+  const fetchh = jest.spyOn(api, 'fetch');
   try {
     await api.get('coucou');
   } catch (error) {
     //
   }
 
-  expect(spyedFetch).toHaveBeenCalledTimes(6);
-  spyedFetch.mockClear();
+  expect(fetchh).toHaveBeenCalledTimes(6);
+  fetchh.mockClear();
 });
 
 test('retriesCount can also be configured on each request', async () => {
-  const api = buildApi({ scheme: 'htp', baseUrl: 'google' });
-  const fetchh = jest.spyOn(global, 'fetch');
+  const api = buildApi({ scheme: 'http', baseUrl: 'google' });
+  const fetchh = jest.spyOn(api, 'fetch');
+
   try {
     await api.get('coucou', { retriesCount: 8 });
   } catch (error) {
@@ -205,4 +210,22 @@ test('can retrieve timestamp from currentRequest', async () => {
   await api.get('coucou');
 
   expect(api.currentRequest.timestamp).toBeTruthy();
+});
+
+test('can add timeout params to a request', async () => {
+  const api = buildApi({ scheme: 'http', baseUrl: 'google' });
+  const fetchh = jest.spyOn(api, 'fetch');
+
+  try {
+    await api.get('coucou', { retriesCount: 8, timeout: 2000 });
+  } catch (error) {
+    //
+  }
+
+  expect(fetchh).toHaveBeenCalledWith('http://google/coucou', {
+    timeout: 2000,
+    body: undefined,
+    headers: {},
+    method: 'get',
+  });
 });

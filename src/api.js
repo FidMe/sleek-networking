@@ -1,3 +1,4 @@
+import fetch from 'node-fetch';
 import ResponseFormatter from './response-formatter';
 import Request from './request';
 import Response from './response';
@@ -5,6 +6,7 @@ import Response from './response';
 export class Api {
   constructor(options) {
     this.mantadoryParams = ['scheme', 'baseUrl'];
+    this.fetch = options.fetch || fetch;
     this.options = {
       afterEach: [],
       onError: [],
@@ -38,7 +40,7 @@ export class Api {
     };
 
     try {
-      this.currentRequest = new Request(this.url, path, method, body, options);
+      this.currentRequest = new Request(this.url, path, method, body, options, this.fetch);
       const response = await this.currentRequest.process();
       const formattedResponse = new ResponseFormatter(response).format();
       this.options.afterEach.forEach(async fn => fn(await formattedResponse));

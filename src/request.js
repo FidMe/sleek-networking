@@ -1,8 +1,9 @@
 import { formatBodyContent, getUrl } from './helpers';
 
 export default class Request {
-  constructor(url, path, method, body, options) {
+  constructor(url, path, method, body, options, fetch) {
     this.url = url;
+    this.fetch = fetch;
     this.path = path;
     this.method = method;
     this.body = body;
@@ -13,7 +14,7 @@ export default class Request {
   process() {
     const fetchRetry = async (url, fetchOptions, n) => {
       try {
-        return await fetch(url, fetchOptions);
+        return await this.fetch(url, fetchOptions);
       } catch (err) {
         if (n === 0) throw err;
         return fetchRetry(url, fetchOptions, n - 1);
@@ -26,6 +27,7 @@ export default class Request {
         headers: this.headers(),
         body: formatBodyContent(this.body),
         method: this.method,
+        timeout: this.options.timeout || 0,
       },
       this.options.retriesCount,
     );
