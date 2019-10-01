@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import nodeFetch from 'node-fetch';
 import ResponseFormatter from './response-formatter';
 import Request from './request';
 import Response from './response';
@@ -6,7 +6,7 @@ import Response from './response';
 export class Api {
   constructor(options) {
     this.mantadoryParams = ['scheme', 'baseUrl'];
-    this.fetch = options.fetch || fetch;
+    this.fetch = options.fetch || nodeFetch;
     this.options = {
       afterEach: [],
       onError: [],
