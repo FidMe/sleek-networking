@@ -4,7 +4,6 @@
 [![dependencies status](https://david-dm.org/FidMe/sleek-networking/status.svg)](https://david-dm.org/FidMe/sleek-networking)
 [![Build Status](https://travis-ci.org/FidMe/sleek-networking.svg?branch=master)](https://travis-ci.org/FidMe/sleek-networking)
 
-
 A simple and efficient `fetch` wrapper that works across any Javascript (React/React Native/Vue JS, etc) app.
 It provides you with a clean and consistent way to call your Api, meanwhile handling JWT authentication, middlewares, etc.
 
@@ -35,6 +34,7 @@ import { Api, Jwt } from "sleek-networking";
 const api = new Api({
   scheme: "http",
   retriesCount: 0,
+  timeout: 1000,
   baseUrl: "google.fr/api/v1",
   afterEach: [request => {}],
   onError: [error => {}],
