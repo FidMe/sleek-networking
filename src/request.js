@@ -1,4 +1,4 @@
-import { formatBodyContent, getUrl } from './helpers';
+import { formatBodyContent, getUrl, timeoutHandler } from './helpers';
 
 export default class Request {
   constructor(url, path, method, body, options, fetch) {
@@ -12,16 +12,7 @@ export default class Request {
   }
 
   process() {
-    const fetchRetry = async (url, fetchOptions, n) => {
-      try {
-        return await this.fetch(url, fetchOptions);
-      } catch (err) {
-        if (n === 0) throw err;
-        return fetchRetry(url, fetchOptions, n - 1);
-      }
-    };
-
-    return fetchRetry(
+    return this.fetchRetry(
       getUrl(this.url, this.path),
       {
         headers: this.headers(),
@@ -31,6 +22,18 @@ export default class Request {
       },
       this.options.retriesCount,
     );
+  }
+
+  async fetchRetry(url, fetchOptions, n) {
+    try {
+      return await Promise.race([
+        timeoutHandler(fetchOptions.timeout),
+        this.fetch(url, fetchOptions),
+      ]);
+    } catch (err) {
+      if (n === 0) throw err;
+      return this.fetchRetry(url, fetchOptions, n - 1);
+    }
   }
 
   headers() {

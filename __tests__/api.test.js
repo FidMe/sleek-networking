@@ -229,3 +229,17 @@ test('can add timeout params to a request', async () => {
     method: 'get',
   });
 });
+
+test('timeout options adds actual timeout errors', async () => {
+  const api = buildApi({ scheme: 'http', baseUrl: 'google.com', timeout: 20 });
+  nock('http://google.com')
+    .persist()
+    .get('/coucou')
+    .reply((_, __, cb) => {
+      setTimeout(() => cb(null, [201, 'THIS IS THE REPLY BODY']), 30);
+    });
+
+  expect((await api.get('coucou')).error).not.toBeFalsy();
+
+  expect((await api.get('coucou', { timeout: 40 })).error).toBeFalsy();
+});
