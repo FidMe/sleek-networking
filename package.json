@@ -28,6 +28,6 @@
   },
   "dependencies": {
     "node-fetch": "^2.3.0",
-    "jsrsasign": "^8.0.12"
+    "jsrsasign": "^10.2.0"
   }
 }
