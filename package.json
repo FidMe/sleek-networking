@@ -27,7 +27,8 @@
     "nock": "^10.0.2"
   },
   "dependencies": {
-    "node-fetch": "^2.3.0",
-    "jsrsasign": "^8.0.12"
+    "base-64": "^1.0.0",
+    "jsrsasign": "^8.0.12",
+    "node-fetch": "^2.3.0"
   }
 }
