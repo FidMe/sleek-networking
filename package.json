@@ -1,6 +1,6 @@
 {
   "name": "sleek-networking",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "A simple package to handle networking, cache, offline ?, etc",
   "main": "index.js",
   "scripts": {
