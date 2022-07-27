@@ -1,5 +1,5 @@
 {
-  "name": "sleek-networking",
+  "name": "@fidme/sleek-networking",
   "version": "0.6.0",
   "description": "A simple package to handle networking, cache, offline ?, etc",
   "main": "index.js",
@@ -30,5 +30,13 @@
     "base-64": "^1.0.0",
     "jsrsasign": "^8.0.12",
     "node-fetch": "^2.3.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FidMe/sleek-networking.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FidMe/sleek-networking/issues"
+  },
+  "homepage": "https://github.com/FidMe/sleek-networking#readme"
 }
