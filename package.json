@@ -1,6 +1,6 @@
 {
   "name": "@fidme/sleek-networking",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A simple package to handle networking, cache, offline ?, etc",
   "main": "index.js",
   "scripts": {
