@@ -17,11 +17,11 @@ It provides you with a clean and consistent way to call your Api, meanwhile hand
 
 ### Install
 
-`npm install --save sleek-networking`
+`npm install --save @fidme/sleek-networking`
 
 or
 
-`yarn add sleek-networking`
+`yarn add @fidme/sleek-networking`
 
 ### Api wrapper
 
@@ -29,19 +29,19 @@ In order to use the Api across your app, you need to instantiate it with your co
 Here are the params you may pass to it :
 
 ```javascript
-import { Api, Jwt } from "sleek-networking";
+import { Api, Jwt } from "@fidme/sleek-networking";
 
 const api = new Api({
   scheme: "http",
   retriesCount: 0,
   timeout: 1000,
   baseUrl: "google.fr/api/v1",
-  afterEach: [request => {}],
-  onError: [error => {}],
+  afterEach: [(request) => {}],
+  onError: [(error) => {}],
   headers: {
     "content-type": "Application/JSON",
-    "X-Auth-Token": () => new Jwt("1234").generateToken()
-  }
+    "X-Auth-Token": () => new Jwt("1234").generateToken(),
+  },
 });
 ```
 
@@ -53,7 +53,7 @@ api.post("posts", body, options);
 api.put("posts", body, options);
 api.delete("posts", options);
 
-api.get("posts").then(res => console.log(res));
+api.get("posts").then((res) => console.log(res));
 /* 
 Every request returns an object containing this format :
 { status: 200, body: { parsed: "JSON" }, header }
@@ -71,7 +71,7 @@ const formData = new FormData();
 formData.append("key", "value");
 
 api.post("yourendpoint", formData, {
-  headers: [("Content-Type": "multipart/form-data; boundary=----yourboundary")]
+  headers: [("Content-Type": "multipart/form-data; boundary=----yourboundary")],
 });
 ```
 
@@ -80,7 +80,7 @@ api.post("yourendpoint", formData, {
 With Sleek Networking it becomes easy to add JWT auth to your entire app. Simply import Jwt, provide your secret,
 
 ```javascript
-import { Jwt } from "sleek-networking";
+import { Jwt } from "@fidme/sleek-networking";
 
 new Jwt(secret, optionalPayload, optionalHeader).generateToken(optionalPayload);
 ```
@@ -103,7 +103,7 @@ Example use case, disconnecting a user after any `401` received
 ```javascript
 new Api({
   ...restOfConfigOptions,
-  afterEach: [verifyAuthentication, doSomethingElse]
+  afterEach: [verifyAuthentication, doSomethingElse],
 });
 
 function verifyAuthentication(response) {
@@ -122,9 +122,9 @@ new Api({
   ...restOfConfigOptions,
   headers: {
     "Content-Type": "Application/JSON",
-    "Custom-Request-Signature": request => functionToCallEverytime(),
-    "X-Auth-Token": request => new Jwt("1234").generateToken()
-  }
+    "Custom-Request-Signature": (request) => functionToCallEverytime(),
+    "X-Auth-Token": (request) => new Jwt("1234").generateToken(),
+  },
 });
 ```
 
