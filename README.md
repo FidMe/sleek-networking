@@ -151,9 +151,9 @@ Instead of returning the default fetch response which contains only status and h
 
 | Methods         | Description                                                                                  | Returns           |
 | --------------- | -------------------------------------------------------------------------------------------- | ----------------- |
-| succeeded       | Check if status is between `200` and `300` and if there is no error.                         | `boolean`         |
-| bodyIfSucceeded | Return the body of the request if the status is between `200` and `300` else return `false`. | `body` or `false` |
-| bodyOrThrow     | Return the body of the request if the status is between `200` and `300` else throw a error.  | `body` or throw   |
+| succeeded       | Check if status is between `200` and `300` or `422` and if there is no error.                         | `boolean`         |
+| bodyIfSucceeded | Return the body of the request if the status is between `200` and `300` or `422` else return `false`. | `body` or `false` |
+| bodyOrThrow     | Return the body of the request if the status is between `200` and `300` or `422` else throw a error.  | `body` or throw   |
 | didNetworkFail  | If the network request failed, return `true` or `false`                                      | `boolean`         |
 | didServerFail   | Tell you if you get error from the server.                                                   | `boolean`         |
 

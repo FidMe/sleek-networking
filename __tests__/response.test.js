@@ -35,9 +35,10 @@ describe('Response', () => {
   });
 
   describe('succeeded', () => {
-    it('returns true if request status is among 200-300', () => {
+    it('returns true if request status is among 200-300 or 422', () => {
       expect(new Response({ status: 200 }).succeeded).toBeTruthy();
       expect(new Response({ status: 299 }).succeeded).toBeTruthy();
+      expect(new Response({ status: 422 }).succeeded).toBeTruthy();
       expect(new Response({ status: 250 }).succeeded).toBeTruthy();
       expect(new Response({ status: 300 }).succeeded).toBeFalsy();
     });
